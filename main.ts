@@ -106,6 +106,7 @@ namespace APDS9930 {
 
     /**
      * set Proximity GAIN
+     * @param gain is Proximity GAIN, eg: APDS9930_PGAIN.PGAIN_8
      */
     //% blockId="APDS9930_SET_PGAIN" block="set Proximity GAIN %gain"
     //% weight=100 blockGap=8
