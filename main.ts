@@ -53,30 +53,48 @@ namespace APDS9930 {
     let _AGAIN = 1;
     let _PGAIN = 8;
 
+    /**
+     * set APDS9930's reg
+     */
     function setReg(reg: number, dat: number): void {
         _wbuf[0] = reg | 0xA0;
         _wbuf[1] = dat;
         pins.i2cWriteBuffer(APDS9930_I2C_ADDRESS, _wbuf);
     }
 
+    /**
+     * get a reg
+     */
     function getReg(reg: number): number {
         pins.i2cWriteNumber(APDS9930_I2C_ADDRESS, reg, NumberFormat.UInt8BE);
         return pins.i2cReadNumber(APDS9930_I2C_ADDRESS, NumberFormat.UInt8BE);
     }
 
+    /**
+     * get two reg, UInt16LE format
+     */
     function get2Reg(reg: number): number {
         pins.i2cWriteNumber(APDS9930_I2C_ADDRESS, reg, NumberFormat.UInt8BE);
         return pins.i2cReadNumber(APDS9930_I2C_ADDRESS, NumberFormat.UInt16LE);
     }
 
+    /** 
+     * get CH0 value
+    */
     function getCH0(): number {
         return get2Reg(APDS9930_Ch0DATAL);
     }
 
-    function getCH1(): number {
+    /** 
+     * get CH1 value
+    */
+   function getCH1(): number {
         return get2Reg(APDS9930_Ch1DATAL);
     }
 
+    /**
+     * set ATIME reg 
+     */
     function ATIME(v: number) {
         setReg(APDS9930_ATIME, v);
     }
