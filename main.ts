@@ -214,11 +214,11 @@ namespace APDS9930 {
     export function getALS(): number {
         let Ch0 = getCH0()
         let Ch1 = getCH1()
-        let ALSIT = 87 * (256 - getReg(APDS9930_ATIME)) / 32
-        let IAC = Math.max(Ch0 - B * Ch1 / 1000, (C * Ch0 - D * Ch1) / 1000)
+        let ALSIT = 87 * (256 - getReg(APDS9930_ATIME)) >> 5
+        let IAC = Math.max(Ch0 - Math.idiv(B * Ch1, 1000), Math.idiv(C * Ch0 - D * Ch1, 1000))
         IAC = Math.max(IAC, 0)
-        let LPC = GA * DF / ALSIT
-        return IAC * LPC / _AGAIN
+        let LPC = Math.idiv(GA * DF, ALSIT)
+        return Math.idiv(IAC * LPC, _AGAIN)
     }
 
     /**
@@ -227,7 +227,7 @@ namespace APDS9930 {
     //% blockId="APDS9930_GET_Proximity" block="get Proximity"
     //% weight=200 blockGap=8
     export function getProximity(): number {
-        return get2Reg(APDS9930_PDATAL) / _PGAIN
+        return Math.idiv(get2Reg(APDS9930_PDATAL), _PGAIN)
     }
 
     /**
